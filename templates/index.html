@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Visitas</title>
+    <!-- Incluir o CSS do Select2 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <!-- Estilo adicional para garantir que o Select2 fique com largura completa -->
+    <style>
+        .select2-container--default .select2-selection--single {
+            height: 38px;
+        }
+        .select2-container .select2-selection--single .select2-selection__rendered {
+            line-height: 38px;
+        }
+        .select2-container .select2-selection--single .select2-selection__arrow {
+            height: 36px;
+        }
+        .select2 {
+            width: 100%!important;
+        }
+        .alert {
+            padding: 10px;
+            background-color: #4CAF50; /* Green */
+            color: white;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Registrar Visita</h1>
+
+    <!-- Mensagem de Sucesso -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div id="flash-message" class="alert">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+            <script>
+                // Script para remover a mensagem depois de algum tempo
+                setTimeout(function() {
+                    document.getElementById('flash-message').style.display = 'none';
+                }, 4000); // A mensagem desaparecerá após 4 segundos
+            </script>
+        {% endif %}
+    {% endwith %}
+
+    <form action="/registrar-visita" method="post">
+        <label for="nomeAssociado">Nome do Associado:</label><br>
+        <select name="nomeAssociado" id="nomeAssociado" class="select2">
+            <option value="">Selecione um Associado</option>
+            {% for associado in associados %}
+            <option value="{{ associado }}">{{ associado }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="nomeGerente">Nome do Gerente:</label><br>
+        <select name="nomeGerente" id="nomeGerente" class="select2">
+            <option value="">Selecione um Gerente</option>
+            {% for gerente in gerentes %}
+            <option value="{{ gerente }}">{{ gerente }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="dataVisita">Data da Visita:</label><br>
+        <input type="date" id="dataVisita" name="dataVisita"><br><br>
+        <input type="submit" value="Registrar Visita">
+    </form>
+
+    <!-- jQuery (necessário para o Select2) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Select2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <!-- Ativação do Select2 -->
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                placeholder: "Selecione uma opção",
+                allowClear: true
+            });
+        });
+    </script>
+</body>
+</html>
