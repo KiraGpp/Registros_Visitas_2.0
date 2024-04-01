@@ -1,7 +1,6 @@
 import pandas as pd
 from flask import Flask, render_template, request, redirect, url_for, flash
 
-web: gunicorn app:app
 
 app = Flask(__name__)
 app.secret_key = '1!Kiragp1234'
